@@ -7,6 +7,7 @@ const logger = require('morgan')
 const indexRouter = require('./routes/index')
 const authRouter = require('./routes/auth')
 const userRouter = require('./routes/user')
+const roleRouter = require('./routes/role')
 
 // lib
 const parser = require('body-parser')
@@ -48,6 +49,7 @@ app.use((req, res, next) => {
 app.use('/', indexRouter)
 app.use('/auth', authRouter)
 app.use('/user', userRouter)
+app.use('/role', roleRouter)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
