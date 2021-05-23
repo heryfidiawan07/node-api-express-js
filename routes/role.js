@@ -1,18 +1,18 @@
 const express = require('express')
 const router = express.Router()
 
-const authenticated = require('../app/validation/authenticated')
+const auth = require('../app/middleware/auth')
 const RoleRequest = require('../app/validation/RoleRequest')
-const RoleController = require('../app/controllers/role')
+const RoleController = require('../app/controllers/RoleController')
 
-router.get('/', authenticated, RoleController.Index)
+router.get('/', auth, RoleController.Index)
 
-router.post('/', authenticated, RoleRequest, RoleController.Post)
+router.post('/', auth, RoleRequest, RoleController.Post)
 
-router.get('/:id', authenticated, RoleController.Show)
+router.get('/:id', auth, RoleController.Show)
 
-router.put('/:id', authenticated, RoleRequest, RoleController.Put)
+router.put('/:id', auth, RoleRequest, RoleController.Put)
 
-router.delete('/:id', authenticated, RoleController.Delete)
+router.delete('/:id', auth, RoleController.Delete)
 
 module.exports = router

@@ -1,19 +1,19 @@
 const express = require('express')
 const router = express.Router()
 
-const authenticated = require('../app/validation/authenticated')
-const userRequest = require('../app/validation/userRequest')
-const userController = require('../app/controllers/user')
+const auth = require('../app/middleware/auth')
+const UserRequest = require('../app/validation/UserRequest')
+const UserController = require('../app/controllers/UserController')
 const file = require('../helpers/file')
 
-router.get('/', authenticated, userController.Index)
+router.get('/', auth, UserController.Index)
 
-router.post('/', authenticated, userRequest, file.uploadImg.array('photo', 12), userController.Post)
+router.post('/', auth, UserRequest, file.uploadImg.array('photo', 12), UserController.Post)
 
-router.get('/:id', authenticated, userController.Show)
+router.get('/:id', auth, UserController.Show)
 
-router.put('/:id', authenticated, userRequest, file.uploadImg.array('photo', 12), userController.Put)
+router.put('/:id', auth, UserRequest, file.uploadImg.array('photo', 12), UserController.Put)
 
-router.delete('/:id', authenticated, userController.Delete)
+router.delete('/:id', auth, UserController.Delete)
 
 module.exports = router

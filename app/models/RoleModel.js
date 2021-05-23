@@ -1,16 +1,9 @@
-require('dotenv/config')
-const { uuid } = require('uuidv4')
 const { Sequelize, DataTypes } = require('sequelize')
-const sequelize = new Sequelize(process.env.DB_CONNECTION)
+const DB = require('../../config/database')
+const moment = require('moment')
+const { uuid } = require('uuidv4')
 
-try {
-    sequelize.authenticate()
-    console.log('Connection has been established successfully.');
-} catch (error) {
-    console.error('Unable to connect to the database:', error);
-}
-
-const Role = sequelize.define('roles', {
+const Role = DB.define('roles', {
     // Model attributes are defined here
     id: {
         type: DataTypes.UUID,
@@ -23,8 +16,18 @@ const Role = sequelize.define('roles', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    created_at: Sequelize.DATE,
-    updated_at: Sequelize.DATE,
+    created_at: {
+        type: Sequelize.DATE,
+        defaultValue: () => {
+            return moment().format('YYYY-MM-DD')
+        },
+    },
+    updated_at: {
+        type: Sequelize.DATE,
+        defaultValue: () => {
+            return moment().format('YYYY-MM-DD')
+        },
+    },
 }, {
     timestamps: false,
 })
