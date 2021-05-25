@@ -8,11 +8,11 @@ const file = require('../helpers/file')
 
 router.get('/', auth, UserController.Index)
 
-router.post('/', auth, UserRequest, file.uploadImg.array('photo', 12), UserController.Post)
+router.post('/', auth, UserRequest, file.uploadImg('user', 'photo', 12), UserController.Post)
 
 router.get('/:id', auth, UserController.Show)
 
-router.put('/:id', auth, UserRequest, file.uploadImg.array('photo', 12), UserController.Put)
+router.put('/:id', auth, UserRequest, file.uploadImg('user', 'photo', 12), UserController.Put)
 
 router.delete('/:id', auth, UserController.Delete)
 

@@ -1,6 +1,5 @@
 const bcrypt = require('bcrypt')
 const UserModel = require('../models/UserModel')
-const Role = require('../models/RoleModel')
 const response = require('../../helpers/response')
 const file = require('../../helpers/file')
 
@@ -14,7 +13,7 @@ exports.Index = async (req, res, next) => {
 }
 
 exports.Show = async (req, res, next) => {
-	await UserModel.findOne({where: {id: req.params.id}})
+	await UserModel.findByPk(req.params.id, {include: ['roles']})
 	.then(result => {
 		if(!result) return response.data(false, result, 'Data not found', res)
 		return response.data(true, result, 'Data found', res)

@@ -13,16 +13,20 @@ const imgValidation = (req, file, cb) => {
     cb(null, true)
 }
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'storage/user/')
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now()+'-'+file.originalname)
-    }
-})
+const storage = (disk) => {
+    return multer.diskStorage({
+        destination: (req, file, cb) => {
+            cb(null, `storage/${disk}/`)
+        },
+        filename: (req, file, cb) => {
+            cb(null, Date.now()+'-'+file.originalname)
+        }
+    })
+} 
 
-exports.uploadImg = multer({ storage:storage, fileFilter: imgValidation })
+exports.uploadImg = (disk, path, max) => {
+    return multer({ storage: storage(disk), fileFilter: imgValidation }).array(path, max)
+}
 
 exports.remove = async (files, disk=false) => {
     // console.log('remove files',files)
